@@ -13,7 +13,7 @@ class Player:
         self.pos_x += dx
         self.pos_y += dy
 
-
+    #-------------------------------------------------------------------
     # C.Man ska inte kunna gå igenom väggar.
     def can_move(self, x, y, grid):
         # Nya positioner
@@ -24,6 +24,7 @@ class Player:
         if check==grid.wall:    #Om det finns vägg går ej att flyttas
             return False
         return True
+    # -------------------------------------------------------------------
 
 
 

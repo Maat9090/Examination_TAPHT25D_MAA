@@ -40,6 +40,7 @@ while not command.casefold() in ["q", "x"]:
         if isinstance(maybe_item, pickups.Item):
             # we found something
             score += maybe_item.value
+            inventory.append(maybe_item)      #Läggr till itm i inventory
             print(f"You found a {maybe_item.name}, +{maybe_item.value} points.")
             #g.set(player.pos_x, player.pos_y, g.empty)
             g.clear(player.pos_x, player.pos_y)
