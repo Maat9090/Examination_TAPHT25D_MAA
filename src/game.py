@@ -30,9 +30,11 @@ while not command.casefold() in ["q", "x"]:
     command = input("Use WASD to move, Q/X to quit. ")
     command = command.casefold()[:1]
 
+#B.Förflyttningar i alla 4 riktningar. (Med tangenterna WASD.)
     if command == "d" and player.can_move(1, 0, g):  # move right
         # TODO: skapa funktioner, så vi inte behöver upprepa så mycket kod för riktningarna "W,A,S"
         maybe_item = g.get(player.pos_x + 1, player.pos_y)
+
         player.move(1, 0)
 
         if isinstance(maybe_item, pickups.Item):
@@ -50,9 +52,16 @@ while not command.casefold() in ["q", "x"]:
 
 
 
+    if command == "w" and player.can_move(0, -1, g):  # move up
+
+        maybe_item = g.get(player.pos_x + 1, player.pos_y)
+        player.move(0, -1)
 
 
+    if command == "s" and player.can_move(0, 1, g):  # move down
 
+        maybe_item = g.get(player.pos_x + 1, player.pos_y)
+        player.move(0, 1)
 
 # Hit kommer vi när while-loopen slutar
 print("Thank you for playing!")
