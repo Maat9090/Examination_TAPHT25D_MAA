@@ -17,7 +17,8 @@ pickups = [Item("carrot",20,"C"), Item("apple",20,"A"), Item("strawberry",20,"S"
 #---------------------------------------------------------------------------------------------------------------------------------------------
 def randomize(grid):
     for item in pickups:
-        while True:
+        for i in range(2):
+          while True:
             # slumpa en position tills vi hittar en som är ledig
             x = grid.get_random_x()
             y = grid.get_random_y()

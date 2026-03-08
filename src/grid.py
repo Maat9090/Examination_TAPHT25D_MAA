@@ -53,6 +53,19 @@ class Grid:
             self.set(j, 0, self.wall)
             self.set(j, self.height - 1, self.wall)
 
+     #H.Använd for-loopar för att skapa flera, sammanhängande väggar på kartan.
+
+        for a in range(21,30):
+             self.set(a,9,self.wall)
+        for b in range(21, 30):
+            self.set(b, 3, self.wall)
+        for c in range(6, 10):
+            self.set(20, c, self.wall)
+        for d in range(4, 8):
+            self.set(30, d, self.wall)
+        for e in range(3,10):
+            if e != 6:
+             self.set(5,e,self.wall)
 
     # Används i filen pickups.py
     def get_random_x(self):

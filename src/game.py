@@ -39,6 +39,7 @@ while not command.casefold() in ["q", "x"]:
         maybe_item = g.get(player.pos_x + 1, player.pos_y)
 
         player.move(1, 0)
+        score -= 1    #G.The floor is lava - för varje steg man går ska man tappa 1 poäng.
 
         if isinstance(maybe_item, pickups.Item):
             # we found something
@@ -53,11 +54,12 @@ while not command.casefold() in ["q", "x"]:
 
         maybe_item = g.get(player.pos_x - 1, player.pos_y)
         player.move(-1, 0)
+        score -= 1
 
         if isinstance(maybe_item, pickups.Item):
             # we found something
             score += maybe_item.value
-            inventory.append(maybe_item)      #Läggr till itm i inventory
+            inventory.append(maybe_item)      #*****Läggr till itm i inventory*******
             print(f"You found a {maybe_item.name}, +{maybe_item.value} points.")
             #g.set(player.pos_x, player.pos_y, g.empty)
             g.clear(player.pos_x, player.pos_y)
@@ -68,7 +70,7 @@ while not command.casefold() in ["q", "x"]:
 
         maybe_item = g.get(player.pos_x , player.pos_y-1)
         player.move(0, -1)
-
+        score -= 1
         if isinstance(maybe_item, pickups.Item):
             # we found something
             score += maybe_item.value
@@ -82,10 +84,11 @@ while not command.casefold() in ["q", "x"]:
 
         maybe_item = g.get(player.pos_x , player.pos_y+1)
         player.move(0, 1)
+        score -= 1
         if isinstance(maybe_item, pickups.Item):
             # we found something
             score += maybe_item.value
-            inventory.append(maybe_item)      #Läggr till itm i inventory
+            inventory.append(maybe_item)      #Läggr till item i inventory
             print(f"You found a {maybe_item.name}, +{maybe_item.value} points.")
             #g.set(player.pos_x, player.pos_y, g.empty)
             g.clear(player.pos_x, player.pos_y)

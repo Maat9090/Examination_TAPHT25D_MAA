@@ -21,7 +21,7 @@ class Player:
         new_y=self.pos_y+y
         # kollar om det finns vägg eller någotannat
         check = grid.get(new_x, new_y)
-        if check==grid.wall:    #Om det finns vägg går ej att flyttas
+        if check==grid.wall:    #****Om det finns vägg går ej att flyttas*****
             return False
         return True
     # -------------------------------------------------------------------
