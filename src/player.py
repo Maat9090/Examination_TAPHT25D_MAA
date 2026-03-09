@@ -1,5 +1,5 @@
 class Player:
-    marker = "@"
+    marker = "ᗧ"
 
     def __init__(self, x, y):
         self.pos_x = x

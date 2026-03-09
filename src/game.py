@@ -37,10 +37,15 @@ while not command.casefold() in ["q", "x"]:
     if command == "d" and player.can_move(1, 0, g):  # move right
         # TODO: skapa funktioner, så vi inte behöver upprepa så mycket kod för riktningarna "W,A,S"
         maybe_item = g.get(player.pos_x + 1, player.pos_y)
+        # *************************************************************************************
+        if maybe_item == g.trap:  #Minska 10p på fälla
+            score -= 10
+        # *************************************************************************************
 
         player.move(1, 0)
+        #*************************************************************************************
         score -= 1    #G.The floor is lava - för varje steg man går ska man tappa 1 poäng.
-
+        # *************************************************************************************
         if isinstance(maybe_item, pickups.Item):
             # we found something
             score += maybe_item.value
@@ -53,13 +58,16 @@ while not command.casefold() in ["q", "x"]:
     if command == "a" and player.can_move(-1, 0, g):  # move left
 
         maybe_item = g.get(player.pos_x - 1, player.pos_y)
+
+        if maybe_item == g.trap:  #Minska 10p på fälla
+            score -= 10
         player.move(-1, 0)
         score -= 1
 
         if isinstance(maybe_item, pickups.Item):
             # we found something
             score += maybe_item.value
-            inventory.append(maybe_item)      #*****Läggr till itm i inventory*******
+            inventory.append(maybe_item)      #*****Läggr till item i inventory*******
             print(f"You found a {maybe_item.name}, +{maybe_item.value} points.")
             #g.set(player.pos_x, player.pos_y, g.empty)
             g.clear(player.pos_x, player.pos_y)
@@ -69,6 +77,9 @@ while not command.casefold() in ["q", "x"]:
     if command == "w" and player.can_move(0, -1, g):  # move up
 
         maybe_item = g.get(player.pos_x , player.pos_y-1)
+
+        if maybe_item == g.trap:  #Minska 10p på fälla
+            score -= 10
         player.move(0, -1)
         score -= 1
         if isinstance(maybe_item, pickups.Item):
@@ -83,7 +94,12 @@ while not command.casefold() in ["q", "x"]:
     if command == "s" and player.can_move(0, 1, g):  # move down
 
         maybe_item = g.get(player.pos_x , player.pos_y+1)
+        if maybe_item == g.trap:  #Minska 10p på fälla
+            score -= 10
+
         player.move(0, 1)
+
+
         score -= 1
         if isinstance(maybe_item, pickups.Item):
             # we found something
