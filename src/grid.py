@@ -4,9 +4,10 @@ class Grid:
     """Representerar spelplanen. Du kan ändra standardstorleken och tecknen för olika rutor. """
     width = 36
     height = 12
-    empty = "."  # Tecken för en tom ruta
-    wall = "■"   # Tecken för en ogenomtränglig vägg
-    trap = "¤"  # Tecken för en fälla
+    empty = "."    # Tecken för en tom ruta
+    wall = "■"     # Tecken för en ogenomtränglig vägg
+    trap = "¤"     # Tecken för en fälla
+    Shovel= "♠"    # Tecken för en spade
 
     def __init__(self):
         """Skapa ett objekt av klassen Grid"""
@@ -74,7 +75,7 @@ class Grid:
 
         self.set(31, 10, self.trap)
         self.set(2, 10, self.trap)
-        #***********************************
+        # **************************************************************************
     # Används i filen pickups.py
     def get_random_x(self):
         """Slumpa en x-position på spelplanen"""

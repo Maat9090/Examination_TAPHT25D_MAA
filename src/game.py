@@ -1,4 +1,3 @@
-from tokenize import maybe
 
 from .grid import Grid
 from .player import Player
@@ -23,7 +22,7 @@ while not command.casefold() in ["q", "x"]:
 
     command = input("Use WASD to move, I for inventory, Q/X to quit ")
   #  command = command.casefold()[:1]
-#------------------------------------------------------------------------------------------
+    # *************************************************************************************
     #Nytt kommando: "i", skriver ut innehållet i spelarens inventory.
     if command == "i":
       print("Here is your inventory")
@@ -33,8 +32,7 @@ while not command.casefold() in ["q", "x"]:
           print(item.name)
       continue
 
-#___________________________________________________________________________________________
-
+    # *************************************************************************************
     dx=0 # x-led (höger/vänster)
     dy=0 #y-led (upp/ner)
 
@@ -47,21 +45,30 @@ while not command.casefold() in ["q", "x"]:
     elif command == "s":
         dy=1
 
-    if (dx !=0 or dy !=0) and player.can_move(dx,dy, g):   #Om spelaren gå i den riktningen
+
+    if dx != 0 or dy != 0: # kollar om spelare har ens rört sig
        new_x = player.pos_x + dx    #Vad blir för nästa ruta
        new_y = player.pos_y + dy
-       maybe_item =g.get(new_x, new_y) #Kollr va som finns i rutan
-    #*************************************************************************************
 
-       if maybe_item == g.trap :  # Minska 10p på fälla
-          score -= 10
-    #*************************************************************************************
+    maybe_item =g.get(new_x, new_y) #Kollr va som finns i rutan
 
-       player.move(dx, dy)
-   #*************************************************************************************
-       score -= 1  # G.The floor is lava - för varje steg man går ska man tappa 1 poäng.
-   # *************************************************************************************
-       if isinstance(maybe_item, pickups.Item):
+    #*************************************************************************************
+    if maybe_item == g.wall:  # Om man hittar vägg
+        for item in inventory:
+            if item.name == "shovel":  # Om spelaren har spade
+                g.clear(new_x, new_y)  # Tar bort väggen
+                inventory.remove(item)  # Tar bort spaden
+                maybe_item= g.empty
+                break
+    # *************************************************************************************
+    if  player.can_move(dx,dy, g):  #Kollr om rutan är ledig
+      player.move(dx, dy)
+      score -= 1  # G.The floor is lava - för varje steg man går ska man tappa 1 poäng.
+
+    if maybe_item == g.trap :  # Minska 10p på fälla
+     score -= 10
+    # *************************************************************************************
+    if isinstance(maybe_item, pickups.Item):
           # we found something
            score += maybe_item.value
            inventory.append(maybe_item)  # Läggr till itm i inventory
