@@ -46,20 +46,26 @@ while not command.casefold() in ["q", "x"]:
         dy=1
 
 
-    if dx != 0 or dy != 0: # kollar om spelare har ens rört sig
-       new_x = player.pos_x + dx    #Vad blir för nästa ruta
-       new_y = player.pos_y + dy
+    if dx == 0 and dy == 0: # om spelare inte rört sig
+        continue
+
+    new_x = player.pos_x + dx    #Vad blir för nästa ruta
+    new_y = player.pos_y + dy
 
     maybe_item =g.get(new_x, new_y) #Kollr va som finns i rutan
 
     #*************************************************************************************
     if maybe_item == g.wall:  # Om man hittar vägg
-        for item in inventory:
-            if item.name == "shovel":  # Om spelaren har spade
-                g.clear(new_x, new_y)  # Tar bort väggen
-                inventory.remove(item)  # Tar bort spaden
-                maybe_item= g.empty
-                break
+            #  vänster yv__höger yv____________övre yv_____nedre yv
+            if new_x==0 or new_x==g.width-1 or new_y==0 or new_y==g.height-1: # kollar om det är inte ytterväggar
+                print("You can't go there!")
+            else:
+                 for item in inventory:
+                    if item.name == "shovel":  # Om spelaren har spade
+                       g.clear(new_x, new_y)  # Tar bort väggen
+                       inventory.remove(item)  # Tar bort spaden
+                       maybe_item= g.empty
+                       break
     # *************************************************************************************
     if  player.can_move(dx,dy, g):  #Kollr om rutan är ledig
       player.move(dx, dy)
