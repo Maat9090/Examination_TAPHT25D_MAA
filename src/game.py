@@ -5,7 +5,6 @@ from . import pickups
 from .status import print_status
 
 
-
 player = Player(15, 5)     # A.Spelaren ska börja nära mitten av rummet.
 score = 0
 inventory = []
