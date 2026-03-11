@@ -68,7 +68,7 @@ class Grid:
         for e in range(3,10):
             if e != 6:
              self.set(5,e,self.wall)
-        #*************fällor****************
+        #*************fällor*****************************************************
         for f in range(2,8):
             if f != 6 and f != 4:
              self.set(12, f, self.trap)

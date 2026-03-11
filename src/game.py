@@ -8,6 +8,8 @@ from .status import print_status
 player = Player(15, 5)     # A.Spelaren ska börja nära mitten av rummet.
 score = 0
 inventory = []
+grace_steps = 0
+steps = 0
 
 g = Grid()
 g.set_player(player)
@@ -53,7 +55,7 @@ while not command.casefold() in ["q", "x"]:
 
     maybe_item =g.get(new_x, new_y) #Kollr va som finns i rutan
 
-    #*************************************************************************************
+    #*****************************************************************************************
     if maybe_item == g.wall:  # Om man hittar vägg
             #  vänster yv__höger yv____________övre yv_____nedre yv
             if new_x==0 or new_x==g.width-1 or new_y==0 or new_y==g.height-1: # kollar om det är inte ytterväggar
@@ -65,18 +67,42 @@ while not command.casefold() in ["q", "x"]:
                        inventory.remove(item)  # Tar bort spaden
                        maybe_item= g.empty
                        break
-    # *************************************************************************************
-    if  player.can_move(dx,dy, g):  #Kollr om rutan är ledig
-      player.move(dx, dy)
-      score -= 1  # G.The floor is lava - för varje steg man går ska man tappa 1 poäng.
+    # ************** L.Bördig jord - efter varje 25:e drag skapas en ny frukt/grönsak någonstans på kartan.**********
+    if player.can_move(dx,dy, g):  #Kollr om rutan är ledig
+        player.move(dx, dy)
+        steps += 1 # Stegräknaren
+        maybe_item = g.get(player.pos_x, player.pos_y) #Kollar om item finns i splarens position
+    if steps % 25 ==0 : # För att få 25 stegar
+        import random
+        item = random.choice(pickups.pickups) #Slumpar från en item
 
+        while True:   # Griden ger en plats
+            x=g.get_random_x()
+            y=g.get_random_y()
+
+            if g.is_empty(x, y):  #Om platsen är tom, läggs en item
+                g.set(x,y,item)
+                print("A new item has been added.")
+                break
+
+     #**************************** O.Grace period-5p********************************************
+    if grace_steps > 0: # kollar om det finns fri steg
+        grace_steps -= 1 # om det finns, minskas här
+    else:
+          score -= 1  #Annars miskar lavan
+    '''    
+    # G.The floor is lava - för varje steg man går ska man tappa 1 poäng.
+    #for item in inventory:
+     #score -= 1  
+    '''
     if maybe_item == g.trap :  # Minska 10p på fälla
-     score -= 10
-    # *************************************************************************************
+      score -= 10
+    # *******************************************************************************************
     if isinstance(maybe_item, pickups.Item):
           # we found something
            score += maybe_item.value
-           inventory.append(maybe_item)  # Läggr till itm i inventory
+           inventory.append(maybe_item)  # Lägger till itm i inventory
+           grace_steps = 5
            print(f"You found a {maybe_item.name}, +{maybe_item.value} points.")
            # g.set(player.pos_x, player.pos_y, g.empty)
            g.clear(player.pos_x, player.pos_y)
